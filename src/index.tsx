@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { App } from './components/App';
-import {RootStore} from "./store/RootStore";
+import App from './components/App';
+import {RootStore} from "./store/RootStore.impl";
 import {Provider} from "mobx-react";
 import {Api} from "./api/Api.impl";
+import {BrowserRouter} from 'react-router-dom'
+import {ThemeProvider} from 'styled-components';
+import {theme} from "./theme/theme";
+import {apiConfig} from "./config/apiConfig";
 
 
-const api = new Api('https://api.github.com/');
+const api = new Api(apiConfig.baseURL);
 const rootStore = new RootStore(api);
 
 const root = ReactDOM.createRoot(
@@ -15,7 +19,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <Provider store={rootStore}>
-        <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+        <BrowserRouter>
+            <Provider store={rootStore}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+    </ThemeProvider>
 );

@@ -1,29 +1,49 @@
-import React, {createRef} from 'react';
+import React, {useEffect} from 'react';
 import '../App.css';
-import {observer} from "mobx-react";
-import {withStore} from "../HOCs/withStore";
 import {IRootStore} from "../store/RootStore.interface";
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
+import {withStore} from "../HOCs/withStore";
+import {observer} from "mobx-react";
+import {GlobalStyle} from "../theme/global";
+import {AppWrapper} from "./ui/App/App.styled";
+import {SignUp} from "../pages/SignUp/SignUp";
+import {SignIn} from "../pages/SignIn/SignIn";
+import {Tooltip} from "./Tooltip/Tooltip";
+import {ProtectedRoute} from "./ProtectedRoute/ProtectedRoute";
+import {Header} from "./Header/Header";
+import {Main} from "../pages/Main/Main";
 
 type Props = {
     store: IRootStore
 }
 
 
+export default withStore(observer(function App({store}: Props) {
 
-export const App = withStore(observer(({store}: Props) => {
-    const ref = createRef<HTMLInputElement>();
-    console.log("render");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (store.authStore.isLoggedIn) {
+            navigate('/dashboard');
+        } else {
+            navigate('/sign-in');
+        }
+    }, [store.authStore.isLoggedIn]);
+
     return (
-        <div className="App">
-            {store.time}
-            {store.something}
-            {store.response && store.response[0].author.login}
-            <input type="text" ref={ref}/>
+        <AppWrapper>
+            <GlobalStyle />
+            <Header />
 
-            <button onClick={() => store.increase()}>increase</button>
-            <button onClick={() => store.decrease()}>decrease</button>
-            <button onClick={() => store.setSomething(ref.current?.value || "")}>set smth</button>
-            <button onClick={() => store.request()}>Request</button>
-        </div>
+            <Routes>
+                <Route path='/sign-in' element={<SignIn />}/>
+                <Route path='/sign-up' element={<SignUp/>}/>
+                <Route path='/*' element={
+                    <ProtectedRoute Component={Main}/>
+                }
+                />
+            </Routes>
+            <Tooltip />
+        </AppWrapper>
     );
-}));
+}))

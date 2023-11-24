@@ -23,7 +23,14 @@ declare module 'styled-components' {
             },
             success: {
                 l1: string,
-            }
+            },
         },
+        shadow: {
+            l1: string,
+            l2: string
+        },
+        border: {
+            radius: string;
+        }
     }
 }

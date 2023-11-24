@@ -1,10 +1,9 @@
-export interface IRootStore {
-    time: number
-    something: string
-    response: any
+import {ITooltipServiceStore} from "./TooltipServiceStore/TooltipServiceStore.interface";
+import {IApi} from "../api/Api.interface";
+import {IAuthStore} from "./AuthStore/AuthStore.interface";
 
-    increase: () => void
-    decrease: () => void
-    setSomething: (smth: string) => void
-    request: () => void
+export interface IRootStore {
+    tooltipServiceStore: ITooltipServiceStore;
+    authStore: IAuthStore;
+    api: IApi;
 }
