@@ -5,10 +5,13 @@ import {ITooltipServiceStore} from "./TooltipServiceStore/TooltipServiceStore.in
 import {TooltipServiceStore} from "./TooltipServiceStore/TooltipServiceStore.impl";
 import {IAuthStore} from "./AuthStore/AuthStore.interface";
 import {AuthStore} from "./AuthStore/AuthStore.impl";
+import {ICoursesStore} from "./CoursesStore/CoursesStore.interface";
+import {CoursesStore} from "./CoursesStore/CoursesStore.impl";
 
 export class RootStore implements IRootStore {
     tooltipServiceStore: ITooltipServiceStore;
     authStore: IAuthStore;
+    coursesStore: ICoursesStore;
 
     constructor(
         public api: IApi
@@ -17,6 +20,7 @@ export class RootStore implements IRootStore {
 
         this.tooltipServiceStore = new TooltipServiceStore();
         this.authStore = new AuthStore(this);
+        this.coursesStore = new CoursesStore(this);
     }
 
 }

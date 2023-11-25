@@ -6,6 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import {Dashboard} from "../Dashboard/Dashboard";
 import {Courses} from "../Courses/Courses";
 import {Profile} from "../Profile/Profile";
+import {Course} from "../Course/Course";
 
 export const Main = () => {
     return (
@@ -14,6 +15,7 @@ export const Main = () => {
             <MainContent>
                 <Routes>
                     <Route path='/dashboard' element={<Dashboard/>}/>
+                    <Route path='/courses/:courseId' element={<Course />}/>
                     <Route path='/courses' element={<Courses/>}/>
                     <Route path='/profile' element={<Profile/>}/>
                 </Routes>
