@@ -15,7 +15,7 @@ export const EditLesson = ({onSave, content}: Props) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
 
     useEffect(() => {
-        setBlocks(content);
+        setBlocks(content || []);
     }, []);
 
     const addText = () => {
@@ -57,7 +57,7 @@ export const EditLesson = ({onSave, content}: Props) => {
     return (
         <Section>
             {
-                blocks.map((b, index) => b.type === 'text' ?
+                blocks?.map((b, index) => b.type === 'text' ?
                     <LessonTextEditBlock content={b.content}
                                          onChange={(value: string) => handleTextBlockChange(value, index)}
                     />
