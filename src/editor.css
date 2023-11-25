@@ -1,4 +1,4 @@
-.wmde-markdown * {
+.wmde-markdown, .wmde-markdown * {
     margin-top: 5px !important;
     margin-bottom: 5px !important;
     background: rgb(250, 250, 250) !important;
