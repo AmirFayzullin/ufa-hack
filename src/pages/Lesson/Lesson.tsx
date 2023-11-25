@@ -6,7 +6,10 @@ import {useEffect} from "react";
 import * as React from "react";
 import {Section} from "../../components/ui/Section/Section";
 import {EditLesson} from "../../components/EditLesson/EditLesson";
-import {Block} from "../../models/Lesson.model";
+import {Block, ILessonContent} from "../../models/Lesson.model";
+import {LessonTextBlock} from "../../components/ui/LessonTextBlock/LessonTextBlock";
+import {LessonTaskBlock} from "../../components/LessonTaskBlock/LessonTaskBlock";
+import {LessonContentWrapper} from "../../components/ui/Lesson/LessonContentWrapper.styled";
 
 type Props = {
     store: IRootStore
@@ -17,7 +20,6 @@ export const Lesson = withStore(observer(({store}: Props) => {
     const params = useParams();
 
     const lessonId = Number(params.lessonId);
-    const courseId = Number(params.courseId);
 
     const lesson = store.lessonStore.lessons[lessonId];
 
@@ -33,18 +35,29 @@ export const Lesson = withStore(observer(({store}: Props) => {
         store.lessonStore.saveLesson({
             lesson_id: lessonId,
             content: JSON.stringify(blocks),
-            course_id: courseId,
-            name: lesson.name
         });
     };
 
     if (store.authStore.isAdmin) return <EditLesson onSave={handleSave}/>;
 
+    if (!lesson) return null;
+
+    const content: Block[] = JSON.parse(lesson.content);
+
     return (
         <Section>
-            {
-                lesson && lesson.content
-            }
+            <LessonContentWrapper>
+                {
+                    content &&
+                    content.map(b => b.type === 'text' ?
+                        <LessonTextBlock key={b.content.text}>
+                            {b.content.text}
+                        </LessonTextBlock>
+                        :
+                        <LessonTaskBlock content={b.content} key={b.content.question}/>
+                    )
+                }
+            </LessonContentWrapper>
         </Section>
     )
 }));

@@ -120,7 +120,7 @@ export class Api implements IApi {
     }
 
     saveLesson(dto: SaveLessonRequestDto): Promise<any> {
-        return this.instance.post('/create_lesson',
+        return this.instance.post('/save_lesson',
             dto,
             {
                 headers: {

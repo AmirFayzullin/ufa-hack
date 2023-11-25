@@ -37,5 +37,5 @@ export type Block =
     }
 
 export interface ILessonContent {
-    blocks: Block
+    blocks: Block[]
 }

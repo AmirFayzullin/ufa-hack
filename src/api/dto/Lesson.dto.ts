@@ -16,7 +16,5 @@ export interface CreateLessonRequestDto {
 
 export interface SaveLessonRequestDto {
     lesson_id: number;
-    course_id: number;
     content: string;
-    name: string;
 }
