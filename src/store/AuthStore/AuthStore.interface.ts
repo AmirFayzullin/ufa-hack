@@ -9,6 +9,7 @@ export interface IAuthStore {
 
     isLoggedIn: boolean;
     user: IUser | null;
+    isAdmin: boolean;
 
     register(dto: RegisterRequestDto): Promise<RegisterResponseDto | AxiosError>;
     login(dto: LoginRequestDto): Promise<LoginResponseDto | AxiosError>;

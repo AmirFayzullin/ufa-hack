@@ -9,7 +9,12 @@ import {
     DeleteCourseRequestSto,
     GetCourseRequestDto, GetCourseResponseDto
 } from "./dto/Course.dto";
-import {GetLessonRequestDto} from "./dto/Lesson.dto";
+import {
+    CreateLessonRequestDto,
+    GetLessonRequestDto,
+    GetLessonResponseDto,
+    SaveLessonRequestDto
+} from "./dto/Lesson.dto";
 import {GetTagsResponseDto} from "./dto/Tags.dto";
 
 
@@ -55,44 +60,54 @@ export class Api implements IApi {
 
     // TODO: types
     createCourse({description, name}: CreateCourseRequestDto): Promise<any> {
-        return this.instance.post('/create_course',null, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-                params: {description, name}
-            })
+        return this.instance.post('/create_course', null, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {description, name}
+        })
             .then((data) => this.checkResponse<any>(data))
     }
 
     deleteCourse({id}: DeleteCourseRequestSto): Promise<any> {
         return this.instance.delete('/delete_course', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-                params: {id}
-            })
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {id}
+        })
             .then((data) => this.checkResponse<any>(data))
     }
 
 
     getCourse({id}: GetCourseRequestDto): Promise<GetCourseResponseDto> {
         return this.instance.get('/course', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-                params: {id}
-            })
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {id}
+        })
             .then((data) => this.checkResponse<GetCourseResponseDto>(data))
     }
 
-    getLesson({id}: GetLessonRequestDto): Promise<any> {
+    getLesson({id}: GetLessonRequestDto): Promise<GetLessonResponseDto> {
         return this.instance.get('/lesson', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-                params: {id}
-            })
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {id}
+        })
             .then((data) => this.checkResponse<any>(data))
+    }
+
+    createLesson({course_id, name}: CreateLessonRequestDto): Promise<any> {
+        return this.instance.post('/create_lesson', null, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {course_id, name}
+        })
+            .then((data) => this.checkResponse<BaseResponseDto>(data))
     }
 
     getTags(): Promise<GetTagsResponseDto> {
@@ -102,5 +117,17 @@ export class Api implements IApi {
             }
         })
             .then((data) => this.checkResponse<GetTagsResponseDto>(data))
+    }
+
+    saveLesson(dto: SaveLessonRequestDto): Promise<any> {
+        return this.instance.post('/create_lesson',
+            dto,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+            }
+        )
+            .then((data) => this.checkResponse<BaseResponseDto>(data))
     }
 }

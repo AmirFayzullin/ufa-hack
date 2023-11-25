@@ -10,7 +10,7 @@ import {withStore} from "../../HOCs/withStore";
 import {observer} from "mobx-react";
 import done from '../../assets/done.svg';
 import {IRootStore} from "../../store/RootStore.interface";
-import {FormEvent, FormEventHandler, SyntheticEvent} from "react";
+import {createRef, FormEvent, FormEventHandler, SyntheticEvent} from "react";
 import {useValidation} from "../../hooks/useValidation/useValidation";
 import {
     createMaxLengthValidator,
@@ -30,46 +30,16 @@ type Props = {
 
 export const SignIn = withStore(observer(({store}: Props) => {
 
-    const { authStore, tooltipServiceStore } = store;
+    const { authStore } = store;
 
-    const [values, validity, handleChange] = useValidation(
-        {
-            email: '',
-            password: '',
-        },
-        {
-            email: [
-                validateNotEmptyString,
-                validateEmailAddress,
-                createMinLengthValidator(5),
-                createMaxLengthValidator(40)
-            ],
-            password: [
-                validateRequired,
-                validateNotEmptyString,
-                createMinLengthValidator(8),
-                validatePassword,
-                createMaxLengthValidator(40)
-            ]
-        }
-    );
-
+    const emailInputRef = createRef<HTMLInputElement>();
+    const passwordInputRef = createRef<HTMLInputElement>();
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (evt: FormEvent) => {
         evt.preventDefault();
 
-        const isFormValid = Object.values(validity).some(v => !v.isValid);
-
-        if (isFormValid) {
-            tooltipServiceStore.open({
-                content: 'Validation failed',
-                icon: errorIcon
-            });
-
-            return;
-        }
-
-        const { email, password } = values;
+        const email = emailInputRef.current?.value || "";
+        const password = passwordInputRef.current?.value || "";
 
         authStore.login({ email, password })
     };
@@ -84,28 +54,14 @@ export const SignIn = withStore(observer(({store}: Props) => {
                 <InputsSet>
                     <InputContainer>
                         <AuthInput placeholder="Email"
-                                   value={values.email}
-                                   onChange={
-                                       ((evt: ChangeEvent<HTMLInputElement>) => handleChange({
-                                           name: 'email',
-                                           value: evt.target.value
-                                       })) as ChangeEventHandler
-                                   }
+                                   ref={emailInputRef}
                         />
-                        <InputError>{validity.email.messages[0]}</InputError>
                     </InputContainer>
                     <InputContainer>
                         <AuthInput placeholder="password"
                                    type='password'
-                                   value={values.password}
-                                   onChange={
-                                       ((evt: ChangeEvent<HTMLInputElement>) => handleChange({
-                                           name: 'password',
-                                           value: evt.target.value
-                                       })) as ChangeEventHandler
-                                   }
+                                   ref={passwordInputRef}
                         />
-                        <InputError>{validity.password.messages[0]}</InputError>
                     </InputContainer>
                 </InputsSet>
 

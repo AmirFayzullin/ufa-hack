@@ -11,8 +11,9 @@ export class AuthStore implements IAuthStore {
     registerLoading: boolean = false;
     loginLoading: boolean = false;
 
-    isLoggedIn: boolean = true;
+    isLoggedIn: boolean = false;
     user: IUser | null = null;
+    isAdmin: boolean = false;
 
     constructor(
         private rootStore: IRootStore
@@ -25,6 +26,7 @@ export class AuthStore implements IAuthStore {
         return this.rootStore.api.register(dto)
             .then((data) => {
                 this.user = data.body.user;
+                this.isAdmin = data.body.user.role_id === 2;
                 this.isLoggedIn = true;
 
                 this.rootStore.tooltipServiceStore.open({
@@ -52,6 +54,7 @@ export class AuthStore implements IAuthStore {
         return this.rootStore.api.login(dto)
             .then((data) => {
                 this.user = data.body.user;
+                this.isAdmin = data.body.user.role_id === 2;
                 this.isLoggedIn = true;
 
                 localStorage.setItem('token', data.body.authorization.token);
