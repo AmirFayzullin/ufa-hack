@@ -1,5 +1,8 @@
 import {ILessonTaskContentBlock} from "../../models/Lesson.model";
 import {ChangeEvent, ChangeEventHandler} from "react";
+import {AuthInput} from "../ui/AuthInput/AuthInput.styled";
+import {SubmitButton} from "../ui/SubmitButton/SubmitButton.styled";
+import {AnswerWrapper, Wrapper} from "./LessonTaskEditBlock.styled";
 
 type Props = {
     content: ILessonTaskContentBlock,
@@ -50,18 +53,17 @@ export const LessonTaskEditBlock = ({content, onChange}: Props) => {
     }
 
     return (
-        <div>
-            <input value={content.question} onChange={handleQuestionChange as ChangeEventHandler}/>
-            {
-                content.answers.map((a, index) =>
-                    <div>
-                        <input value={a.text} onChange={(evt) => handleAnswerChange(evt, index)}/>
-                        <input type='radio' checked={a.isAnswer} onChange={(evt) => handleIsAnswerChange(evt, index)}/>
-                    </div>
-                )
-            }
-
-            <button onClick={handleAddAnswer}>Add</button>
-        </div>
+        <Wrapper>
+            <AuthInput placeholder='Question' value={content.question} onChange={handleQuestionChange as ChangeEventHandler}/>
+                {
+                    content.answers.map((a, index) =>
+                        <AnswerWrapper>
+                            <AuthInput placeholder='Answer' value={a.text} onChange={(evt) => handleAnswerChange(evt, index)}/>
+                            <input type='radio' checked={a.isAnswer} onChange={(evt) => handleIsAnswerChange(evt, index)}/>
+                        </AnswerWrapper>
+                    )
+                }
+            <SubmitButton onClick={handleAddAnswer}>Add answer</SubmitButton>
+        </Wrapper>
     )
 };

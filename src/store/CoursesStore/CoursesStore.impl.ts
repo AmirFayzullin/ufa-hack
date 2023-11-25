@@ -6,7 +6,7 @@ import {CoursesResponseDto, GetCourseResponseDto} from "../../api/dto/Course.dto
 import {ITag} from "../../models/Tag.model";
 import {GetTagsResponseDto} from "../../api/dto/Tags.dto";
 import {ILessonPreview} from "../../models/Lesson.model";
-import {GetLessonRequestDto} from "../../api/dto/Lesson.dto";
+import {DeleteLessonRequestDto, GetLessonRequestDto} from "../../api/dto/Lesson.dto";
 
 export class CoursesStore implements ICoursesStore {
     courses: ICourse[] = [];
@@ -47,6 +47,14 @@ export class CoursesStore implements ICoursesStore {
         this.rootStore.api.getCourse(dto)
             .then((data: GetCourseResponseDto) => {
                 this.lessonsPreviews[dto.id] = data.lessons;
+            })
+            .catch(err => console.log(err));
+    }
+
+    deleteLesson(dto: DeleteLessonRequestDto, courseId: number): void {
+        this.rootStore.api.deleteLesson(dto)
+            .then(() => {
+                this.lessonsPreviews[courseId] = this.lessonsPreviews[courseId].filter(p => p.lesson_id !== dto.id)
             })
             .catch(err => console.log(err));
     }

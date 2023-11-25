@@ -6,7 +6,7 @@ import {useEffect} from "react";
 import * as React from "react";
 import {Section} from "../../components/ui/Section/Section";
 import {EditLesson} from "../../components/EditLesson/EditLesson";
-import {Block, ILessonContent} from "../../models/Lesson.model";
+import {Block} from "../../models/Lesson.model";
 import {LessonTextBlock} from "../../components/ui/LessonTextBlock/LessonTextBlock";
 import {LessonTaskBlock} from "../../components/LessonTaskBlock/LessonTaskBlock";
 import {LessonContentWrapper} from "../../components/ui/Lesson/LessonContentWrapper.styled";

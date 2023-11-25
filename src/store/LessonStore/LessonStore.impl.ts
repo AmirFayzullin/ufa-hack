@@ -3,7 +3,7 @@ import {IRootStore} from "../RootStore.interface";
 import {makeAutoObservable} from "mobx";
 import {ILesson, ILessonPreview} from "../../models/Lesson.model";
 import {
-    CreateLessonRequestDto,
+    CreateLessonRequestDto, DeleteLessonRequestDto,
     GetLessonRequestDto,
     GetLessonResponseDto,
     SaveLessonRequestDto

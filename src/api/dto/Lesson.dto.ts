@@ -18,3 +18,7 @@ export interface SaveLessonRequestDto {
     lesson_id: number;
     content: string;
 }
+
+export interface DeleteLessonRequestDto {
+    id: number;
+}

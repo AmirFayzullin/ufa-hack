@@ -13,4 +13,8 @@ export const LessonPreviewWrapper = styled.div`
     }
     
     transition: .2s;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;

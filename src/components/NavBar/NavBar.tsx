@@ -27,7 +27,7 @@ export const NavBar = () => {
             {
                 navBarConfig.map(item =>
                     <Link to={item.link}>
-                        <NavBarItem isActive={item.link === location.pathname}>
+                        <NavBarItem isActive={location.pathname.includes(item.link)}>
                             {item.label}
                         </NavBarItem>
                     </Link>

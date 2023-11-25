@@ -10,7 +10,7 @@ import {
     GetCourseRequestDto, GetCourseResponseDto
 } from "./dto/Course.dto";
 import {
-    CreateLessonRequestDto,
+    CreateLessonRequestDto, DeleteLessonRequestDto,
     GetLessonRequestDto,
     GetLessonResponseDto,
     SaveLessonRequestDto
@@ -58,7 +58,6 @@ export class Api implements IApi {
             .then((data) => this.checkResponse<CoursesResponseDto>(data))
     }
 
-    // TODO: types
     createCourse({description, name}: CreateCourseRequestDto): Promise<any> {
         return this.instance.post('/create_course', null, {
             headers: {
@@ -71,6 +70,16 @@ export class Api implements IApi {
 
     deleteCourse({id}: DeleteCourseRequestSto): Promise<any> {
         return this.instance.delete('/delete_course', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {id}
+        })
+            .then((data) => this.checkResponse<any>(data))
+    }
+
+    deleteLesson({id}: DeleteLessonRequestDto): Promise<any> {
+        return this.instance.delete('/delete_lesson', {
             headers: {
                 'Authorization': `Bearer ${localStorage.token}`
             },

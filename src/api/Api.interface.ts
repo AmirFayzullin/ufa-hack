@@ -8,7 +8,7 @@ import {
     GetCourseRequestDto, GetCourseResponseDto
 } from "./dto/Course.dto";
 import {
-    CreateLessonRequestDto,
+    CreateLessonRequestDto, DeleteLessonRequestDto,
     GetLessonRequestDto,
     GetLessonResponseDto,
     SaveLessonRequestDto
@@ -26,6 +26,7 @@ export interface IApi {
     getCourse(dto: GetCourseRequestDto): Promise<GetCourseResponseDto>
     getLesson(dto: GetLessonRequestDto): Promise<GetLessonResponseDto>
     createLesson(dto: CreateLessonRequestDto): Promise<any>
+    deleteLesson(dto: DeleteLessonRequestDto): Promise<any>
 
     getTags(): Promise<GetTagsResponseDto>
 

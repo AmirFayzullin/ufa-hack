@@ -1,7 +1,7 @@
 import {ICourse} from "../../models/Course.model";
 import {ITag} from "../../models/Tag.model";
 import {ILessonPreview} from "../../models/Lesson.model";
-import {GetLessonRequestDto} from "../../api/dto/Lesson.dto";
+import {DeleteLessonRequestDto, GetLessonRequestDto} from "../../api/dto/Lesson.dto";
 
 export interface ICoursesStore {
     courses: ICourse[];
@@ -16,4 +16,5 @@ export interface ICoursesStore {
     getTags(): void;
 
     getCourseLessons({id}: GetLessonRequestDto): void;
+    deleteLesson(dto: DeleteLessonRequestDto, courseId: number): void;
 }

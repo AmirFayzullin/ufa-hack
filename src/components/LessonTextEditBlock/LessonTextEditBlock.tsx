@@ -1,6 +1,7 @@
 import {ChangeEvent} from "react";
 import * as React from "react";
 import {ILessonTextContentBlock} from "../../models/Lesson.model";
+import {Textarea} from "./LessonTextEditBlock.styled";
 
 type Props = {
     content: ILessonTextContentBlock,
@@ -14,6 +15,6 @@ export const LessonTextEditBlock = ({content, onChange}: Props) => {
     };
 
     return (
-        <textarea value={content.text} onChange={handleChange}/>
+        <Textarea value={content.text} onChange={handleChange}/>
     )
 };

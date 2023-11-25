@@ -7,6 +7,10 @@ import {Section} from "../../components/ui/Section/Section";
 import * as React from "react";
 import {LessonPreviewWrapper} from "../../components/ui/Lesson/LessonPreviewWrapper.styled";
 import {useNavigate} from "react-router-dom";
+import {AuthInput} from "../../components/ui/AuthInput/AuthInput.styled";
+import {SubmitButton} from "../../components/ui/SubmitButton/SubmitButton.styled";
+import {AddBar} from "./Course.styled";
+import {DeleteButton} from "../../components/ui/DeleteButton/DeleteButton.styled";
 
 type Props = {
     store: IRootStore
@@ -46,21 +50,40 @@ export const Course = withStore(observer(({store}: Props) => {
         })
     };
 
+    const handleDelete = (id: number) => {
+        store.coursesStore.deleteLesson({id}, courseId)
+    }
+
     return (
         <Section>
             {
-                previews &&
-                    previews.map(p =>
-                        <LessonPreviewWrapper onClick={() => handleLessonClick(p.lesson_id)}>
-                            {p.lesson_name}
-                        </LessonPreviewWrapper>)
+                store.authStore.isAdmin &&
+                <AddBar>
+                    <AuthInput ref={lessonInput}/>
+                    <SubmitButton onClick={handleCreateLesson}>Create</SubmitButton>
+                </AddBar>
             }
             {
-                store.authStore.isAdmin &&
-                    <>
-                        <input ref={lessonInput}/>
-                        <button onClick={handleCreateLesson}>Create</button>
-                    </>
+                previews &&
+                previews.map(p =>
+                    p
+                        ?
+                        <LessonPreviewWrapper onClick={() => handleLessonClick(p.lesson_id)}>
+                            {p.lesson_name}
+
+                            {
+                                store.authStore.isAdmin &&
+                                <DeleteButton
+                                    onClick={(evt) => {
+                                        evt.stopPropagation();
+                                        handleDelete(p.lesson_id)
+                                    }}
+                                />
+                            }
+                        </LessonPreviewWrapper>
+                        :
+                        null
+                )
             }
         </Section>
     )
