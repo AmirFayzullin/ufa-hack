@@ -10,6 +10,7 @@ import {Block} from "../../models/Lesson.model";
 import {LessonTextBlock} from "../../components/ui/LessonTextBlock/LessonTextBlock";
 import {LessonTaskBlock} from "../../components/LessonTaskBlock/LessonTaskBlock";
 import {LessonContentWrapper} from "../../components/ui/Lesson/LessonContentWrapper.styled";
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 type Props = {
     store: IRootStore
@@ -50,9 +51,7 @@ export const Lesson = withStore(observer(({store}: Props) => {
                 {
                     content &&
                     content.map(b => b.type === 'text' ?
-                        <LessonTextBlock key={b.content.text}>
-                            {b.content.text}
-                        </LessonTextBlock>
+                        <MarkdownEditor.Markdown source={b.content.text}/>
                         :
                         <LessonTaskBlock content={b.content} key={b.content.question}/>
                     )

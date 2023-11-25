@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './editor.css';
 import App from './components/App';
 import {RootStore} from "./store/RootStore.impl";
 import {Provider} from "mobx-react";
