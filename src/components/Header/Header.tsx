@@ -18,7 +18,7 @@ export const Header = withStore(observer(({store}: Props) => {
 
     return (
         <HeaderWrapper>
-            Logo
+            <p>Logo</p>
             <Routes>
                 <Route path='/sign-in'
                        element={

@@ -1,25 +1,28 @@
 import {ILessonTaskContentBlock} from "../../models/Lesson.model";
-import {Wrapper} from "./LessonTaskBlock.styled";
+import {Answer, AnswerWrapper, Wrapper} from "./LessonTaskBlock.styled";
+import {useState} from "react";
 
 type Props = {
     content: ILessonTaskContentBlock
 }
 
 export const LessonTaskBlock = ({content}: Props) => {
+    const [selected, setSelected] = useState("");
+
     return (
         <Wrapper>
             <p>{content.question}</p>
-            <div>
+            <form>
                 {
                     content.answers.map(a =>
-                        <div key={a.text}>
-                            <input type='radio'/>
-                            <span>{a.text}</span>
-                        </div>
+                        <AnswerWrapper key={a.text} onClick={() => setSelected(a.text)}>
+                            <input type='radio' checked={selected === a.text}/>
+                            <Answer isCorrect={a.isAnswer} selected={selected === a.text}>{a.text}</Answer>
+                        </AnswerWrapper>
 
                     )
                 }
-            </div>
+            </form>
         </Wrapper>
     )
 };

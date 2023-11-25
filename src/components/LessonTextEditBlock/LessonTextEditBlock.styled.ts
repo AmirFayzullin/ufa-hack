@@ -8,6 +8,8 @@ export const Textarea = styled.textarea`
     
     width: 100%;
     
+    font-size: 20px;
+    
     outline: none;
     border: solid 2px transparent;
     

@@ -12,13 +12,11 @@ type Props = {
 
 export const Courses = withStore(observer(({store}: Props) => {
 
-    const { coursesStore } = store;
+    const {coursesStore} = store;
 
     useEffect(() => {
-        if (coursesStore.courses) {
-            coursesStore.getCourses();
-            coursesStore.getTags();
-        }
+        coursesStore.getCourses();
+        coursesStore.getTags();
     }, []);
 
 

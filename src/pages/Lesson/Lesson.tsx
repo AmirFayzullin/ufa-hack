@@ -38,11 +38,11 @@ export const Lesson = withStore(observer(({store}: Props) => {
         });
     };
 
-    if (store.authStore.isAdmin) return <EditLesson onSave={handleSave}/>;
-
     if (!lesson) return null;
-
+    
     const content: Block[] = JSON.parse(lesson.content);
+
+    if (store.authStore.isAdmin) return <EditLesson content={content} onSave={handleSave}/>;
 
     return (
         <Section>
